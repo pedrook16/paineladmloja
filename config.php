@@ -9,11 +9,11 @@ if(ENVIRONMENT == 'development') {
 	$config['dbuser'] = 'root';
 	$config['dbpass'] = '';
 } else {
-	define("BASE_URL", "http://localhost/paineladmloja/");
-	$config['dbname'] = 'loja2';
-	$config['host'] = 'localhost';
-	$config['dbuser'] = 'root';
-	$config['dbpass'] = 'root';
+	define("BASE_URL", "http://projects.crddeveloper.com/paineladmloja/");
+	$config['dbname'] = 'crddev71_loja';
+	$config['host'] = '162.241.2.184';
+	$config['dbuser'] = 'crddev71_pedro';
+	$config['dbpass'] = 'ba0896@P';
 }
 
 global $db;
