@@ -27,8 +27,8 @@
 
 				<?php foreach($permission_items as $item): ?>
 					<div class="form-group">
-						<input type="checkbox" name="items[]" value="<?php echo $item['id']; ?>" id="item-<?php echo $item['id']; ?>" />
-						<label for="item-<?php echo $item['id']; ?>"><?php echo $item['name']; ?></label>
+						<input type="checkbox" name="items[]" value="<?php echo utf8_encode($item['id']); ?>" id="item-<?php echo $item['id']; ?>" />
+						<label for="item-<?php echo utf8_encode($item['id']); ?>"><?php echo utf8_encode($item['name']); ?></label>
 					</div>
 				<?php endforeach; ?>
 
