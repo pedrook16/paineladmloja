@@ -1,23 +1,22 @@
 <!DOCTYPE html>
-
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Painel ADM loja</title>
+  <title>AdminLTE 2 | Starter</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/adminLte/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/adminLte/bower_components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/adminlte/bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/adminLte/bower_components/Ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/adminlte/bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/adminLte/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/adminlte/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
-  <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/adminLte/dist/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/adminlte/dist/css/skins/skin-blue.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -89,7 +88,7 @@ desired effect
                     <a href="#">
                       <div class="pull-left">
                         <!-- User Image -->
-                        <img src="<?php echo BASE_URL; ?>assets/adminLte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        <img src="<?php echo BASE_URL; ?>assets/adminlte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                       </div>
                       <!-- Message title and timestamp -->
                       <h4>
@@ -174,14 +173,14 @@ desired effect
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
-              <img src="<?php echo BASE_URL; ?>assets/adminLte/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <img src="<?php echo BASE_URL; ?>assets/adminlte/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
               <span class="hidden-xs">Alexander Pierce</span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
-                <img src="<?php echo BASE_URL; ?>assets/adminLte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="<?php echo BASE_URL; ?>assets/adminlte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
                   Alexander Pierce - Web Developer
@@ -231,7 +230,7 @@ desired effect
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="<?php echo BASE_URL; ?>assets/adminLte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="<?php echo BASE_URL; ?>assets/adminlte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>Alexander Pierce</p>
@@ -256,7 +255,12 @@ desired effect
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
+        <li class="active"><a href="<?php echo BASE_URL; ?>"><i class="fa fa-link"></i> <span>Dashboard</span></a></li>
+
+        <?php if( $viewData['user']->hasPermission('permissions_view') ): ?>
+        <li><a href="<?php echo BASE_URL; ?>permissions"><i class="fa fa-link"></i> <span>Permissões</span></a></li>
+        <?php endif; ?>
+
         <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
@@ -277,9 +281,9 @@ desired effect
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <?php $this->loadViewIntemplate($viewName, $viewData); ?>
-    
-    
+
+    <?php $this->loadViewInTemplate($viewName, $viewData); ?>
+
   </div>
   <!-- /.content-wrapper -->
 
@@ -375,11 +379,11 @@ desired effect
 <!-- REQUIRED JS SCRIPTS -->
 
 <!-- jQuery 3 -->
-<script src="<?php echo BASE_URL; ?>assets/adminLte/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="<?php echo BASE_URL; ?>assets/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="<?php echo BASE_URL; ?>assets/adminLte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="<?php echo BASE_URL; ?>assets/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
-<script src="<?php echo BASE_URL; ?>assets/adminLte/dist/js/adminlte.min.js"></script>
+<script src="<?php echo BASE_URL; ?>assets/adminlte/dist/js/adminlte.min.js"></script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
