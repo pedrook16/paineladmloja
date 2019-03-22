@@ -2,60 +2,96 @@
 namespace Models;
 
 use \Core\Model;
+use \Models\Permissions;
 
 class Users extends Model {
 
-        private $uid;
+	private $uid;
+	private $permissions;
 
-        public function isLogger() {
+	public function isLogged() {
 
-            if(!empty($_SESSION['token'])) {
-                $token = $_SESSION['token'];
+		if(!empty($_SESSION['token'])) {
+			$token = $_SESSION['token'];
 
-                $sql = "SELECT id FROM users WHERE token = :token";
-                $sql = $this->db->prepare($sql);
-                $sql->bindValue(":token", $token);
-                $sql->execute();
+			$sql = "SELECT id, id_permission FROM users WHERE token = :token";
+			$sql = $this->db->prepare($sql);
+			$sql->bindValue(':token', $token);
+			$sql->execute();
 
-                if($sql->rowCount() > 0) {
-                    $data = $sql->fetch();
-                    $this->uid = $data['id'];
+			if($sql->rowCount() > 0) {
+				$p = new Permissions();
 
-                    return true;
-                }
-            }
-            return false;
-        }	
+				$data = $sql->fetch();
+				$this->uid = $data['id'];
+				$this->permissions = $p->getPermissions($data['id_permission']);
 
-        public function validateLogin($email, $password) {
-            $sql = "SELECT id FROM users WHERE email = :email AND password = :password AND admin = 1";
-            $sql = $this->db->prepare($sql);
-            $sql->bindValue(":email", $email);
-            $sql->bindValue(":password", md5($password));
-            $sql->execute();
+				return true;
+			}
 
-            if($sql->rowCount() > 0) {
-                $data = $sql->fetch();
+		}
 
-                $token = md5(time().rand(0,999).$data['id'].time());
-
-                $sql = "UPDATE users SET token = :token WHERE id = :id";
-                $sql = $this->db->prepare($sql);
-                $sql->bindValue(":token", $token);
-                $sql->bindValue(":id", $data['id']);
-                $sql->execute();
-
-                $_SESSION['token'] = $token;
-
-                return true;
-             }
-
-             return false;
-
-        }
-
-        public function getId() {
-            return $this->uid;
-        }
+		return false;
 	}
+
+	public function hasPermission($permission_slug) {
+
+		if(in_array($permission_slug, $this->permissions)) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	public function validateLogin($email, $password) {
+
+		$sql = "SELECT id FROM users WHERE email = :email AND password = :password AND admin = 1";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(':email', $email);
+		$sql->bindValue(':password', md5($password));
+		$sql->execute();
+
+		if($sql->rowCount() > 0) {
+			$data = $sql->fetch();
+
+			$token = md5(time().rand(0,999).$data['id'].time());
+
+			$sql = "UPDATE users SET token = :token WHERE id = :id";
+			$sql = $this->db->prepare($sql);
+			$sql->bindValue(':token', $token);
+			$sql->bindValue(':id', $data['id']);
+			$sql->execute();
+
+			$_SESSION['token'] = $token;
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public function getId() {
+		return $this->uid;
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

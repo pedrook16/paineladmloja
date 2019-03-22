@@ -4,12 +4,13 @@ namespace Controllers;
 use \Core\Controller;
 use \Models\Users;
 
-class LoginController extends Controller {	
+class LoginController extends Controller {
 
 	public function index() {
 		$array = array(
-			'erro' => ''
+			'error' => ''
 		);
+
 		if(!empty($_SESSION['errorMsg'])) {
 			$array['error'] = $_SESSION['errorMsg'];
 			$_SESSION['errorMsg'] = '';
@@ -19,7 +20,6 @@ class LoginController extends Controller {
 	}
 
 	public function index_action() {
-
 		if(!empty($_POST['email']) && !empty($_POST['password'])) {
 			$email = $_POST['email'];
 			$password = $_POST['password'];
@@ -28,22 +28,26 @@ class LoginController extends Controller {
 			if($u->validateLogin($email, $password)) {
 				header("Location: ".BASE_URL);
 				exit;
-			
-			}else {
+			} else {
 				$_SESSION['errorMsg'] = 'Usuário e/ou senha errados!';
 			}
-		}else {
-			$_SESSION['errorMsg'] = 'Preecha os campos abaixo.';
+		} else {
+			$_SESSION['errorMsg'] = 'Preencha os campos abaixo.';
 		}
 		
 		header("Location: ".BASE_URL."login");
-			exit;
+		exit;
 	}
 
 	public function logout() {
+
 		unset($_SESSION['token']);
-			header("Location: ".BASE_URL.'login');
-				exit;
+		header("Location: ".BASE_URL);
+		exit;
+
 	}
 
+
+
 }
+
