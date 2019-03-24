@@ -10,7 +10,7 @@ class Products extends Model {
         $cat = new Categories();
         $brands = new Brands();
 		
-		$sql = "SELECT id_category, id_brand, name, stock, price, price_from FROM products";					
+		$sql = "SELECT id,id_category, id_brand, name, stock, price, price_from FROM products";					
 		$sql = $this->db->query($sql);
 
 		if($sql->rowCount() > 0) {

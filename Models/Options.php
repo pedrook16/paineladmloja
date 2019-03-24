@@ -5,10 +5,12 @@ use \Core\Model;
 
 class Options extends Model {
 
-	public function getAll($show_product_count = false) {
+	public function getAll($check_has_product = false) {
 		$array = array();
-		if($show_product_count = true) {
-			$sql = "SELECT * FROM options";
+		if($check_has_product) {
+			$sql = "SELECT *, (
+				select count(*) from products_options where products_options.id = options.id
+			) as product_count FROM options";
 		}else { 	
 			$sql = "SELECT * FROM options";
 		}			
@@ -55,17 +57,17 @@ class Options extends Model {
 	}
 	public function del($id) {
 
-		$sql = "SELECT count(*) FROM products WHERE products.id_brand = :id";
+		$sql = "SELECT count(*) FROM products_options WHERE id_optins = :id";
 		$sql = $this->db->prepare($sql);
 		$sql->bindValue(':id', $id);
 		$sql->execute();
 		$data = $sql->fetch();
 
 		if($data['c'] == '0') { 
-			$sql = "DELETE FROM options WHERE id = :id";
-			$sql = $this->db->prepare($sql);
-			$sql->bindValue(':id', $id);
-			$sql->execute();
+		$sql = "DELETE FROM options WHERE id = :id";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(':id', $id);
+		$sql->execute();
 		}	
 
 	}    

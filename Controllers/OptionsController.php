@@ -52,7 +52,9 @@ class OptionsController extends Controller {
 	public function add_action() {
 
 		if(!empty($_POST['name'])) {
-            $options = new Options();
+			$options = new Options();
+			
+			$name = $_POST['name'];
             
 			$options->add($name);
 

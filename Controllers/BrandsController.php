@@ -52,7 +52,9 @@ class BrandsController extends Controller {
 	public function add_action() {
 
 		if(!empty($_POST['name'])) {
-            $brands = new Brands();
+			$brands = new Brands();
+			
+			$name = $_POST['name'];
             
 			$brands->add($name);
 
