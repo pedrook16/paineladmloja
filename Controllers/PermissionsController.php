@@ -43,6 +43,7 @@ class PermissionsController extends Controller {
 
 		$this->loadTemplate('permissions_items', $this->arrayInfo);
 	}
+	
 
 	public function del($id_group) {
 		$p = new Permissions();

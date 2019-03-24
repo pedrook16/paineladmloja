@@ -27,6 +27,7 @@ class CategoriesController extends Controller {
 			'user' => $this->user,
 			'menuActive' => 'categories'
 		);
+		
 
 	}
 
