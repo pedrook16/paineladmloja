@@ -12,6 +12,7 @@
 		<div class="box-header">
 			<h3 class="box-title">Grupos de Permissões</h3>
 			<div class="box-tools">
+				<a href="<?php echo BASE_URL.'permissions/items'; ?>" class="btn btn-primary">Itens de Permissão</a>
 				<a href="<?php echo BASE_URL.'permissions/add'; ?>" class="btn btn-success">Adicionar</a>
 			</div>
 		</div>

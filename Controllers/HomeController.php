@@ -7,6 +7,7 @@ use \Models\Users;
 class HomeController extends Controller {
 
 	private $user;
+	private $arrayInfo;
 
 	public function __construct() {
 		$this->user = new Users();
@@ -16,13 +17,15 @@ class HomeController extends Controller {
 			exit;
 		}
 
+		$this->arrayInfo = array(
+			'user' => $this->user,
+			'menuActive' => 'home'
+		);
+
 	}
 
 	public function index() {
-		$array = array(
-			'user' => $this->user
-		);
-		$this->loadTemplate('home', $array);
+		$this->loadTemplate('home', $this->arrayInfo);
 	}
 
 }
