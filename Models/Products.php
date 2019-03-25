@@ -5,6 +5,34 @@ use \Core\Model;
 
 class Products extends Model {
 
+	public function get($id) {
+		$array = array();
+
+		$sql = "SELECT * FROM products WHERE id = :id";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(':id', $id);
+		$sql->execute();
+
+		if($sql->rowCount() > 0) {
+			$array = $sql->fetch(\PDO::FETCH_ASSOC);
+
+		$sql = "SELECT id_option, p_value FROM products_options WHERE id_product = :id ";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(':id', $id);
+		$sql->execute();
+
+		if($sql->rowCount() > 0) { 
+			$ops = $sql->fetchAll(\PDO::FETCH_ASSOC);
+
+				foreach($ops as $item) {
+					$array['options'][$item['id_option']] = $item['p_value'];
+				}
+			}
+			
+		}
+		return $array;
+	}
+
 	public function getAll() {
 		$array = array();
 
@@ -188,20 +216,7 @@ class Products extends Model {
 	}
 
 	/*
-	public function get($id) {
-		$array = array();
-
-		$sql = "SELECT * FROM brands WHERE id = :id";
-		$sql = $this->db->prepare($sql);
-		$sql->bindValue(':id', $id);
-		$sql->execute();
-
-		if($sql->rowCount() > 0) {
-			$array = $sql->fetch(\PDO::FETCH_ASSOC);
-		}
-
-		return $array;
-	}
+	
 
 	public function update($name, $id) {
 
