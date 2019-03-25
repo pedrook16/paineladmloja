@@ -4,7 +4,6 @@
     Produtos
   </h1>
 </section>
-
 <!-- Main content -->
 <section class="content container-fluid">
 
@@ -54,7 +53,7 @@
 
 				<div class="form-group <?php echo (in_array('price_from', $errorItems))?'has-error':''; ?>">
 					<label for="p_price_from">Preço (de)</label>
-					<input type="text" class="form-control" id="p_price_from" name="price_from" />
+					<input required type="text" class="form-control" id="p_price_from" name="price_from" />
 				</div>
 
 				<div class="form-group <?php echo (in_array('price', $errorItems))?'has-error':''; ?>">
@@ -66,34 +65,34 @@
 
 				<div class="form-group <?php echo (in_array('weight', $errorItems))?'has-error':''; ?>">
 					<label for="p_weight">Peso (em Kg)</label>
-					<input type="text" class="form-control" id="p_weight" name="weight" />
+					<input required type="text" class="form-control" id="p_weight" name="weight" />
 				</div>
 
 				<div class="form-group <?php echo (in_array('width', $errorItems))?'has-error':''; ?>">
 					<label for="p_width">Largura (em Cm)</label>
-					<input type="text" class="form-control" id="p_width" name="width" />
+					<input required type="text" class="form-control" id="p_width" name="width" />
 				</div>
 
 				<div class="form-group <?php echo (in_array('height', $errorItems))?'has-error':''; ?>">
 					<label for="p_height">Altura (em Cm)</label>
-					<input type="text" class="form-control" id="p_height" name="height" />
+					<input required type="text" class="form-control" id="p_height" name="height" />
 				</div>
 
 				<div class="form-group <?php echo (in_array('length', $errorItems))?'has-error':''; ?>">
 					<label for="p_length">Comprimento (em Cm)</label>
-					<input type="text" class="form-control" id="p_length" name="length" />
+					<input required type="text" class="form-control" id="p_length" name="length" />
 				</div>
 
 				<div class="form-group <?php echo (in_array('diameter', $errorItems))?'has-error':''; ?>">
 					<label for="p_diameter">Diametro (em Cm)</label>
-					<input type="text" class="form-control" id="p_diameter" name="diameter" />
+					<input required type="text" class="form-control" id="p_diameter" name="diameter" />
 				</div>
 
 				<hr/>
 
 				<div class="form-group <?php echo (in_array('featured', $errorItems))?'has-error':''; ?>">
 					<label for="p_featured">Em Destaque</label><br/>
-					<input type="checkbox" id="p_featured" name="featured" />
+					<input  type="checkbox" id="p_featured" name="featured" />
 				</div>
 
 				<div class="form-group <?php echo (in_array('sale', $errorItems))?'has-error':''; ?>">
