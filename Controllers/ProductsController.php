@@ -83,6 +83,8 @@ class ProductsController extends Controller {
 			
 			$options = $_POST['options'];
 
+			$images = (!empty($_FILES['images']))?$_FILES['images']:array();
+
 			if(!empty($id_category) && !empty($id_brand) && !empty($name) && !empty($stock) && !empty($price)) {
 
 				$products = new Products();
@@ -107,7 +109,8 @@ class ProductsController extends Controller {
 					$bestseller,
 					$new_product,
 
-					$options
+					$options,
+					$images
 				);
 
 			} else {
