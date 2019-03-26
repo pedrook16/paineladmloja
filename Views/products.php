@@ -39,7 +39,7 @@
         		<td>
         			<div class="btn-group">
 						<a href="<?php echo BASE_URL.'products/edit/'.$item['id']; ?>" class="btn btn-xs btn-primary">Editar</a>
-						<a href="<?php echo BASE_URL.'products/del/'.$item['id']; ?>" class="btn btn-xs btn-danger">Excluir</a>
+						<a href="<?php echo BASE_URL.'products/del/'.$item['id']; ?>" onclick="return confirm('Tem certeza que deseja EXCLUIR esse produto ?')" class="btn btn-xs btn-danger">Excluir</a>
 					</div>
         		</td>
         	</tr>

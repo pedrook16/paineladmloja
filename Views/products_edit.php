@@ -126,6 +126,17 @@
 
 				<label>Imagens do Produto</label><br/>
 
+                <div class="images_area">
+                    <?php foreach($info['images'] as $id_image => $item): ?>
+                        <div class="p_image">
+                            <img src="<?php echo $url; ?>" /><br><br>
+                            <a class="btn btn-danger" href="javascript:;" >Deletar Imagem</a>
+
+                            <input type="hidden" name="c_images[]" value="<?php echo $id_image; ?>" />
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
 				<button class="p_new_image btn btn-primary">+</button>
 
 				<div class="products_files_area">

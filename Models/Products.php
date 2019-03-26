@@ -16,6 +16,7 @@ class Products extends Model {
 		if($sql->rowCount() > 0) {
 			$array = $sql->fetch(\PDO::FETCH_ASSOC);
 
+			//Pegando as Options do produto
 		$sql = "SELECT id_option, p_value FROM products_options WHERE id_product = :id ";
 		$sql = $this->db->prepare($sql);
 		$sql->bindValue(':id', $id);
@@ -28,7 +29,22 @@ class Products extends Model {
 					$array['options'][$item['id_option']] = $item['p_value'];
 				}
 			}
-			
+
+			//Pegando images do Produto 
+
+			$sql = "SELECT id, url FROM products_images WHERE id_product = :id";
+			$sql = $this->db->prepare($sql);
+			$sql->bindValue(':id', $id);
+			$sql->execute();
+
+			if($sql->rowCount() > 0) { 
+				$imgs = $sql->fetchAll(\PDO::FETCH_ASSOC);
+
+				$array['images'] = array();
+				foreach($imgs as $item) {
+					$array['images'][$item['id']] = BASE_URL_SITE.'media/products/'.$item['url'];
+				}
+			}
 		}
 		return $array;
 	}
@@ -146,6 +162,114 @@ class Products extends Model {
 		}
 
 	}
+	
+	public function edit($id_category,
+					$id_brand,
+					$name,
+					$description,
+					$stock,
+					$price_from,
+					$price,
+
+					$weight,
+					$width,
+					$height,
+					$length,
+					$diameter,
+
+					$featured,
+					$sale,
+					$bestseller,
+					$new_product,
+					
+					$options,
+					$images,
+					$c_images,
+
+					$id) {
+
+		if(!empty($id) && !empty($id_category) && !empty($id_brand) && !empty($name) && !empty($stock) && !empty($price)) {
+
+			$options_selected = array();
+			foreach($options as $optk => $opt) {
+				if(!empty($opt)) {
+					$options_selected[$optk] = $opt;
+				}
+			}
+
+			$options_ids = implode(',', array_keys($options_selected));
+
+			$sql = "UPDATE INTO products SET id_category = :id_category, id_brand = :id_brand, name = :name,description = :description, stock = :stock, price = :price, price_from = :price_from, featured = :featured, sale = :sale,bestseller = :bestseller, new_product = :new_product,  options = :options,weight = :weight, width = :width, height = :height, diameter = :diameter WHERE id = :id";
+
+			$sql = $this->db->prepare($sql);
+			$sql->bindValue(':id_category', $id_category);
+			$sql->bindValue(':id_brand', $id_brand);
+			$sql->bindValue(':name', $name);
+			$sql->bindValue(':description', $description);
+			$sql->bindValue(':stock', $stock);
+			$sql->bindValue(':price', $price);
+			$sql->bindValue(':price_from', $price_from);
+			$sql->bindValue(':featured', $featured);
+			$sql->bindValue(':sale', $sale);
+			$sql->bindValue(':bestseller', $bestseller);
+			$sql->bindValue(':new_product', $new_product);
+			$sql->bindValue(':options', $options_ids);
+			$sql->bindValue(':weight', $weight);
+			$sql->bindValue(':width', $width);
+			$sql->bindValue(':height', $height);
+			$sql->bindValue(':length', $length);
+			$sql->bindValue(':diameter', $diameter);
+			$sql->bindValue(':id', $id);
+			$sql->execute();			
+
+			$sql = "DELETE FROM products_options WHERE id_product = :id";
+			$sql = $this->db->prepare($sql);
+			$sql->bindValue(':id', $id);
+			$sql->execute();
+
+			foreach($options_selected as $optk => $opt) {
+
+				$sql = "INSERT INTO products_options (id_product, id_option, p_value) VALUES (:id_product, :id_option, :p_value)";
+				$sql = $this->db->prepare($sql);
+				$sql->bindValue(':id_product', $id);
+				$sql->bindValue(':id_option', $optk);
+				$sql->bindValue(':p_value', $opt);
+				$sql->execute();
+
+			}
+
+			//Deletar as imagens não-presentes
+			if(isset($c_images)) {
+				foreach($c_images as $ckey => $cimg) {
+					$c_images[$ckey] = intval($cimg);
+				}
+				$sql = "DELETE FROM products_images WHERE id_product = :id AND id NOT IN (".implode(',', $c_images).")";
+				$sql = $this->db->prepare($sql);
+				$sql->bindValue(':id', $id);
+				$sql->execute();
+			}
+			// Adicionar as imagens
+			$allowed_images = array(
+				'image/jpeg',
+				'image/jpg',
+				'image/png'
+			);
+			for($q=0;$q<count($images['name']);$q++) {
+
+				$tmp_name = $images['tmp_name'][$q];
+				$type = $images['type'][$q];
+
+				if(in_array($type, $allowed_images)) {
+
+					$this->addProductImage( $id, $tmp_name, $type );
+
+				}
+
+			}
+
+		}
+
+	}
 
 	public function addProductImage($id, $tmp_name, $type) {
 
@@ -213,6 +337,13 @@ class Products extends Model {
 
 		}
 
+	}
+
+	public function del($id) {
+		$sql = "UPDATE products SET stock = 0 WHERE id = :id";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(':id', $id);		
+		$sql->execute();
 	}
 
 	/*

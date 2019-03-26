@@ -4,4 +4,8 @@ $(function(){
 
         $('.products_files_area').append('<input type="file" name="images[]" />')
     })
+
+    $('.p_image a').click(function(){
+        $(this).parent().remove()
+    })
 })

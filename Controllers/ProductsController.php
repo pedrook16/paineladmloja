@@ -64,6 +64,85 @@ class ProductsController extends Controller {
 			$this->loadTemplate('products_edit', $this->arrayInfo);
 		}
 	}
+
+	public function edit_action() {
+
+		if(!empty($_POST['id'])) {
+			$id = $_POST['id']; 
+			$id_category = $_POST['id_category'];
+			$id_brand = $_POST['id_brand'];
+			$name = $_POST['name'];
+			$description = $_POST['description'];
+			$stock = $_POST['stock'];
+			$price_from = $_POST['price_from'];
+			$price = $_POST['price'];
+			$weight = $_POST['weight'];
+			$width = $_POST['width'];
+			$height = $_POST['height'];
+			$length = $_POST['length'];
+			$diameter = $_POST['diameter'];
+			
+			$featured = (!empty($_POST['featured']))?1:0;
+			$sale = (!empty($_POST['sale']))?1:0;
+			$bestseller = (!empty($_POST['bestseller']))?1:0;
+			$new_product = (!empty($_POST['new_product']))?1:0;
+			
+			$options = $_POST['options'];
+
+			$c_images = (!empty($_POST['c_images']))?$_FILES['images']:array();
+
+			$images = (!empty($_FILES['images']))?$_FILES['images']:array();
+
+			if(!empty($id) && !empty($id_category) && !empty($id_brand) && !empty($name) && !empty($stock) && !empty($price)) {
+
+				$products = new Products();
+
+				$products->edit(
+					$id_category,
+					$id_brand,
+					$name,
+					$description,
+					$stock,
+					$price_from,
+					$price,
+
+					$weight,
+					$width,
+					$height,
+					$length,
+					$diameter,
+
+					$featured,
+					$sale,
+					$bestseller,
+					$new_product,
+
+					$options,
+					$images,
+					$c_images,
+					
+					$id
+				);
+
+			} else {
+				$_SESSION['formError'] = array('id_category', 'id_brand', 'name', 'stock', 'price');
+
+				header("Location: ".BASE_URL."products/edit/".$id);
+				exit;
+			}
+
+			header("Location: ".BASE_URL."products");
+			exit;
+
+		} else {
+			$_SESSION['formError'] = array();
+
+			header("Location: ".BASE_URL."products");
+			exit;
+		}
+
+	}
+
 	public function add() {
 		$cat = new Categories();
 		$brands = new Brands();
@@ -152,8 +231,19 @@ class ProductsController extends Controller {
 			header("Location: ".BASE_URL."products/add");
 			exit;
 		}
-
 	}
+
+		public function del($id) {
+
+			if( !empty($id)) {
+				$products = new Products();
+				$products->del($id);
+			}
+			header("Location: ".BASE_URL."products");
+				exit;
+		}
+
+	
 
 	/*
 	public function edit($id) {
