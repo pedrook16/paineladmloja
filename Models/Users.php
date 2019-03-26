@@ -91,6 +91,26 @@ class Users extends Model {
 	public function getId() {
 		return $this->uid;
 	}
+	public function getAll() {
+		$array = array();
+
+		$sql = "SELECT  
+			users.id, 
+			users.name, 
+			users.email, 
+			users.admin, 
+			permission_groups.name as permisson_name
+		FROM users  
+		LEFT JOIN permission_groups 
+		ON permission_groups.id = users.id_permission WHERE admin = '1' ";
+		$sql = $this->db->query($sql);
+		
+		if($sql->rowCount() > 0) {
+			$array = $sql->fetchAll(\PDO::FETCH_ASSOC); 
+		}
+
+		return $array;
+	}
 
 }
 
