@@ -15,8 +15,10 @@
 
 	Hello World<br/>
 
+  Painel de Teste ( Algumas funcionalidades não implementadas ).</br>
+
 	<?php if( $user->hasPermission('permissions_view') ): ?>
-	Tem permissão.
+	Tem permissão de user admin.
 	<?php endif; ?>  
 
 </section>
